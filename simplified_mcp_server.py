@@ -17,7 +17,7 @@ from rich.table import Table
 from rich.logging import RichHandler
 
 from mcp.server.fastmcp import FastMCP
-from mcp.types import TextContent, PromptMessage, PromptResult
+from mcp.types import TextContent, PromptMessage, GetPromptResult
 
 # Configure console and logging
 console = Console()
@@ -170,7 +170,10 @@ def simple_prompt(context: Dict[str, Any]) -> PromptResult:
         PromptResult containing messages
     """
     code = context.get("code", "@startuml\nAlice -> Bob: Hello\n@enduml")
-    return PromptResult(messages=[PromptMessage(role="user", content=TextContent(text=code))])
+    return GetPromptResult(
+        description="Simple prompt for UML diagram",
+        messages=[PromptMessage(role="user", content=TextContent(text=code))]
+    )
 
 # Set up the CLI using Typer
 cli = typer.Typer(help="Simplified UML Diagram Generator MCP Server")

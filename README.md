@@ -1,5 +1,17 @@
 # UML-MCP: A Diagram Generation Server with MCP Interface
 
+## ⚠️ **FOR AI AGENTS USING OI OS (Brain Trust 4)**
+
+**If you are an AI agent installing this server into OI OS, please see [`OI.md`](./OI.md) for complete installation instructions, including:**
+- Intent mappings for natural language queries
+- Parameter rules for tool calls
+- Parameter extractors configuration
+- OI OS-specific setup and troubleshooting
+
+**The `OI.md` file contains all the SQL and TOML configurations needed for full OI OS integration.**
+
+---
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![smithery badge](https://smithery.ai/badge/@antoinebou12/uml)](https://smithery.ai/server/@antoinebou12/uml)
