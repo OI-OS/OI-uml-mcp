@@ -250,6 +250,26 @@ The server returns:
 - **PlantUML Documentation:** https://plantuml.com/
 - **PlantUML Syntax Guide:** https://plantuml.com/guide
 
+## 🚨 Known Issues
+
+### Parameter Extraction
+
+**Issue:** Natural language queries may not extract PlantUML code correctly due to parameter engine limitations.
+
+**Status:** ⚠️ **Known limitation** - The parameter engine may pass extractor key names as literal values.
+
+**Workaround:** Use direct calls for reliable results:
+
+```bash
+# Direct call (recommended)
+./brain-trust4 call OI-uml-mcp generate_uml '{
+  "diagram_type": "class",
+  "code": "@startuml\nclass User {\n  -name: string\n  +login()\n}\n@enduml"
+}'
+```
+
+**Note:** This is a known limitation of the OI OS parameter engine and affects multiple servers. A universal fix is planned.
+
 ## ✅ Verification
 
 After installation, verify the server is working:
@@ -258,9 +278,12 @@ After installation, verify the server is working:
 # List tools
 ./brain-trust4 tools OI-uml-mcp
 
-# Test diagram generation
-./oi "generate uml class diagram"
+# Test diagram generation (direct call)
+./brain-trust4 call OI-uml-mcp generate_uml '{
+  "diagram_type": "class",
+  "code": "@startuml\nclass Test\n@enduml"
+}'
 ```
 
-If all commands work, the server is successfully installed and configured!
+If the direct call works, the server is successfully installed and configured!
 
