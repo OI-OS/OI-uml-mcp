@@ -1,0 +1,84 @@
+{
+  "server_name": "OI-uml-mcp",
+  "version": "1.0.0",
+  "intents": [
+    {
+      "keyword": "generate uml",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "create uml diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "uml diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "generate diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "create diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "plantuml",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "class diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "sequence diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "activity diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "use case diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "state diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "component diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "deployment diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    },
+    {
+      "keyword": "object diagram",
+      "tool_name": "generate_uml",
+      "priority": 10
+    }
+  ],
+  "parameter_extractors": {
+    "generate_uml": {
+      "diagram_type": "regex:(?:diagram[\\s_-]?type|type)[\\s:]+(class|sequence|activity|usecase|state|component|deployment|object)",
+      "code": "remove:generate,create,uml,diagram,plantuml"
+    }
+  },
+  "reminder_message": "Use generate_uml tool to create UML diagrams. All PlantUML code must be wrapped in @startuml and @enduml tags."
+}
+
