@@ -75,8 +75,8 @@
   ],
   "parameter_extractors": {
     "generate_uml": {
-      "diagram_type": "regex:(?:diagram[\\s_-]?type|type)[\\s:]+(class|sequence|activity|usecase|state|component|deployment|object)",
-      "code": "remove:generate,create,uml,diagram,plantuml"
+      "OI-uml-mcp::generate_uml.diagram_type": "regex:(?:diagram[\\s_-]?type|type)[\\s:]+(class|sequence|activity|usecase|state|component|deployment|object)",
+      "OI-uml-mcp::generate_uml.code": "remove:generate,create,uml,diagram,plantuml"
     }
   },
   "reminder_message": "Use generate_uml tool to create UML diagrams. All PlantUML code must be wrapped in @startuml and @enduml tags."
