@@ -16,7 +16,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.logging import RichHandler
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from mcp.types import TextContent, PromptMessage, GetPromptResult
 
 # Configure console and logging

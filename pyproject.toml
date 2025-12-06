@@ -38,7 +38,7 @@ python-dateutil = "^2.8.2"
 graphviz = "^0.20.1"
 pillow = "^10.1.0"
 # If fastmcp is not your own module but a dependency
-fastmcp = "^0.4.0"
+fastmcp = { git = "https://github.com/OI-OS/OI-fastmcp.git" }
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"

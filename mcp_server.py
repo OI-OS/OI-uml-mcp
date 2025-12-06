@@ -15,18 +15,63 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from mcp.types import TextContent, PromptMessage, GetPromptResult
 
 # Configuration: Use PlantUML server (can be overridden with env var)
 PLANTUML_SERVER = os.environ.get("PLANTUML_SERVER", "http://www.plantuml.com/plantuml")
 
 
+def _encode6bit(b: int) -> str:
+    """Encode 6 bits into a single character using PlantUML's custom encoding."""
+    if b < 10:
+        return chr(48 + b)  # 0-9
+    b -= 10
+    if b < 26:
+        return chr(65 + b)  # A-Z
+    b -= 26
+    if b < 26:
+        return chr(97 + b)  # a-z
+    b -= 26
+    if b == 0:
+        return '-'
+    return '_' if b == 1 else '?'
+
+def _encode3bytes(b1: int, b2: int, b3: int) -> str:
+    """Encode 3 bytes into 4 characters using PlantUML's encoding."""
+    c1 = (b1 >> 2) & 0x3F
+    c2 = ((b1 & 0x3) << 4) | ((b2 >> 4) & 0x3F)
+    c3 = ((b2 & 0xF) << 2) | ((b3 >> 6) & 0x3F)
+    c4 = b3 & 0x3F
+    return _encode6bit(c1) + _encode6bit(c2) + _encode6bit(c3) + _encode6bit(c4)
+
 def encode_plantuml(text: str) -> str:
-    """Encode PlantUML text using zlib and base64."""
+    """Encode PlantUML text using DEFLATE compression and PlantUML's custom 6-bit encoding.
+    
+    PlantUML uses a custom encoding scheme (not standard base64):
+    1. Compress text using zlib.compress (DEFLATE algorithm)
+    2. Strip first 2 bytes (zlib header) and last 4 bytes (checksum)
+    3. Encode using PlantUML's custom 6-bit character set (0-9, A-Z, a-z, -, _)
+    """
+    # Compress using DEFLATE
     compressed = zlib.compress(text.encode("utf-8"))
-    # Strip the first two and last four bytes per PlantUML spec
-    return base64.urlsafe_b64encode(compressed[2:-4]).decode("utf-8")
+    # Strip zlib header (2 bytes) and checksum (4 bytes)
+    data = compressed[2:-4]
+    
+    # Encode using PlantUML's custom 6-bit encoding
+    result = ""
+    for i in range(0, len(data), 3):
+        if i + 2 < len(data):
+            # 3 bytes -> 4 characters
+            result += _encode3bytes(data[i], data[i + 1], data[i + 2])
+        elif i + 1 < len(data):
+            # 2 bytes -> 3 characters (pad with 0)
+            result += _encode3bytes(data[i], data[i + 1], 0)
+        else:
+            # 1 byte -> 2 characters (pad with 0)
+            result += _encode3bytes(data[i], 0, 0)
+    
+    return result
 
 
 def generate_diagram(code: str, fmt: str = "svg") -> Dict[str, Any]:
