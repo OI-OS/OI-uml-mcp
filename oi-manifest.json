@@ -79,6 +79,6 @@
       "OI-uml-mcp::generate_uml.code": "remove:generate,create,uml,diagram,plantuml"
     }
   },
-  "reminder_message": "Use generate_uml tool to create UML diagrams. All PlantUML code must be wrapped in @startuml and @enduml tags."
+  "reminder_message": "Use generate_uml tool to create UML diagrams. All PlantUML code must be wrapped in @startuml and @enduml tags. IMPORTANT: When the tool returns a URL, format it as a clickable link: [View Diagram](URL) for better UX."
 }
 
